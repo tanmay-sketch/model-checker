@@ -26,16 +26,36 @@ namespace mc {
 
         public:
             // Constructor
-            Event(EventId id, ThreadId tid, EventLabel l);
+            Event(EventId id, ThreadId tid, EventLabel l) : event_id(id), thread_id(tid), label(l) {}
+
+            // Copy constructor
+            Event(const Event& other) : event_id(other.event_id), thread_id(other.thread_id), label(other.label) {}
+
+            // Move constructor
+            Event(Event&& other) noexcept : event_id(std::move(other.event_id)), thread_id(std::move(other.thread_id)), label(std::move(other.label)) {}
             
             // Virtual destructor
             virtual ~Event() = default;
 
             // Copy assignment
-            Event& operator=(const Event& other);
+            Event& operator=(const Event& other) {
+                if (this != &other) {
+                    event_id = other.event_id;
+                    thread_id = other.thread_id;
+                    label = other.label;
+                }
+                return *this;
+            }
 
             // Move assignment
-            Event& operator=(Event&& other) noexcept;
+            Event& operator=(Event&& other) noexcept {
+                if (this != &other) {
+                    event_id = std::move(other.event_id);
+                    thread_id = std::move(other.thread_id);
+                    label = std::move(other.label);
+                }
+                return *this;
+            }
             
             // Getters
             EventId getId() const { return event_id; }
@@ -54,6 +74,12 @@ namespace mc {
         public:
             // Constructor
             ReadEvent(EventId id, ThreadId tid, std::string var, int val);
+
+            // Copy constructor
+            ReadEvent(const ReadEvent& other);
+
+            // Move constructor
+            ReadEvent(ReadEvent&& other) noexcept;
 
             // Destructor
             ~ReadEvent() override = default;
@@ -83,6 +109,12 @@ namespace mc {
             // Constructor
             WriteEvent(EventId id, ThreadId tid, std::string var, int val);
 
+            // Copy constructor
+            WriteEvent(const WriteEvent& other);
+
+            // Move constructor
+            WriteEvent(WriteEvent&& other) noexcept;
+
             // Destructor
             ~WriteEvent() override = default;
 
@@ -106,6 +138,12 @@ namespace mc {
         public:
             // Constructor
             FenceEvent(EventId id, ThreadId tid);
+
+            // Copy constructor
+            FenceEvent(const FenceEvent& other);
+
+            // Move constructor
+            FenceEvent(FenceEvent&& other) noexcept;
 
             // Destructor
             ~FenceEvent() override = default;
