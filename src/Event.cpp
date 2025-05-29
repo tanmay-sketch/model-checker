@@ -9,7 +9,9 @@
 #include "../include/Event.h"
 using namespace mc;
 
-// ReadEvent implementations
+/* 
+    Read Event implementation
+*/
 ReadEvent::ReadEvent(EventId id, ThreadId tid, std::string var, int val)
     : Event(id, tid, EventLabel::READ), variable(var), value(val) {}
 
@@ -37,7 +39,25 @@ ReadEvent& ReadEvent::operator=(ReadEvent&& other) noexcept {
     return *this;
 }
 
-// WriteEvent implementations
+void ReadEvent::printEvent() const {
+    EventId event_id = getEventId();
+    ThreadId tid = getThreadId();
+    EventLabel label = getLabel();
+    std::string variable = getVariable();
+    int value = getValue();
+
+    std::cout << "--------------------------------" << std::endl
+              << "Event (" << event_id << ") " 
+              << "in thread " << static_cast<int>(tid) << ":" << std::endl
+              << "--------------------------------" << std::endl
+              << "Event type: " << (label == EventLabel::READ ? "READ" : "UNKNOWN") << std::endl
+              << "Value in " << variable << " that is being read: " << value << std::endl
+              << "--------------------------------" << std::endl;
+}
+
+/* 
+    Write Event implementation
+*/
 WriteEvent::WriteEvent(EventId id, ThreadId tid, std::string var, int val)
     : Event(id, tid, EventLabel::WRITE), variable(var), value(val) {}
 
@@ -65,7 +85,26 @@ WriteEvent& WriteEvent::operator=(WriteEvent&& other) noexcept {
     return *this;
 }
 
-// FenceEvent implementations
+void WriteEvent::printEvent() const {
+    EventId event_id = getEventId();
+    ThreadId tid = getThreadId();
+    EventLabel label = getLabel();
+    std::string variable = getVariable();
+    int value = getValue();
+
+    std::cout << "--------------------------------" << std::endl
+              << "Event (" << event_id << ") " 
+              << "in thread " << static_cast<int>(tid) << ":" << std::endl
+              << "--------------------------------" << std::endl
+              << "Event type: " << (label == EventLabel::WRITE ? "WRITE" : "UNKNOWN") << std::endl
+              << "Value being written to " << variable << " is: " << value << std::endl
+              << "--------------------------------" << std::endl;
+}
+
+
+/* 
+    Fence Event Implementation
+*/
 FenceEvent::FenceEvent(EventId id, ThreadId tid)
     : Event(id, tid, EventLabel::FENCE) {}
 
@@ -89,39 +128,15 @@ FenceEvent& FenceEvent::operator=(FenceEvent&& other) noexcept {
     return *this;
 }
 
-// Print implementations
-void ReadEvent::printEvent() const {
-    EventId event_id = getEventId();
-    ThreadId tid = getThreadId();
-    EventLabel label = getLabel();
-    std::string variable = getVariable();
-    int value = getValue();
-
-    std::cout << "Event (" << event_id << "): " 
-              << "in thread: " << tid << std::endl
-              << "Event type: " << (label == EventLabel::READ ? "READ" : "UNKNOWN") << std::endl
-              << "Value in " << variable << " that is being read: " << value << std::endl;
-}
-
-void WriteEvent::printEvent() const {
-    EventId event_id = getEventId();
-    ThreadId tid = getThreadId();
-    EventLabel label = getLabel();
-    std::string variable = getVariable();
-    int value = getValue();
-
-    std::cout << "Event (" << event_id << "): " 
-              << "in thread: " << tid << std::endl
-              << "Event type: " << (label == EventLabel::WRITE ? "WRITE" : "UNKNOWN") << std::endl
-              << "Value in " << variable << " that is being written: " << value << std::endl;
-}
-
 void FenceEvent::printEvent() const {
     EventId event_id = getEventId();
     ThreadId tid = getThreadId();
     EventLabel label = getLabel();
 
-    std::cout << "Event (" << event_id << "): " 
-              << "in thread: " << tid << std::endl
-              << "Event type: " << (label == EventLabel::FENCE ? "FENCE" : "UNKNOWN") << std::endl;
+    std::cout << "--------------------------------" << std::endl
+              << "Event (" << event_id << ") " 
+              << "in thread " << static_cast<int>(tid) << ":" << std::endl
+              << "--------------------------------" << std::endl
+              << "Event type: " << (label == EventLabel::FENCE ? "FENCE" : "UNKNOWN") << std::endl
+              << "--------------------------------" << std::endl;
 }

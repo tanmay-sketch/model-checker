@@ -3,12 +3,9 @@
 #include <set>
 #include "Event.h"
 #include "ThreadId.h"
+#include "ExecutionGraph.h"
 using namespace mc;
 
-class ExecutionGraph {
-    
-    u_int16_t generate_event_id() {
-        return this->current_event_ += 1;
-    };
-
-};
+u_int16_t ExecutionGraph::generate_event_id() {
+    return this->current_event_ += 1;
+}

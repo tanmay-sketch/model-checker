@@ -134,6 +134,7 @@ namespace mc {
             void printEvent() const override;
     };
 
+    // Fence event types have to be added later
     class FenceEvent : public Event {
         public:
             // Constructor
