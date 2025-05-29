@@ -6,6 +6,6 @@
 #include "ExecutionGraph.h"
 using namespace mc;
 
-u_int16_t ExecutionGraph::generate_event_id() {
-    return this->current_event_ += 1;
+ExecutionGraph::ExecutionGraph() {
+    this->current_event_ = 0;
 }

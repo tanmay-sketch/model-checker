@@ -34,15 +34,15 @@ bool checkFenceEvent(const FenceEvent& event) {
 }
 
 int main() {
-    ReadEvent readEvent(1, 1, "x", 1);
+    ReadEvent readEvent("1", 1, "x", 1);
     checkReadEvent(readEvent);
     std::cout << std::endl;
 
-    WriteEvent writeEvent(2, 1, "x", 2);
+    WriteEvent writeEvent("2", 1, "x", 2);
     checkWriteEvent(writeEvent);
     std::cout << std::endl;
 
-    FenceEvent fenceEvent(3, 1);
+    FenceEvent fenceEvent("3", 1);
     checkFenceEvent(fenceEvent);
     std::cout << std::endl;
 
