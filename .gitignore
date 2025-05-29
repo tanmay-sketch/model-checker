@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# project specific
+.DS_Store
+.cursor/
+.vscode/
+paper/
